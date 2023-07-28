@@ -2,6 +2,7 @@
 //use std::io;
 
 fn is_prime(x:i32) ->bool{
+    //try using sieve of erastosthenes of sieve of atkin even better instead here
     for i in 2..x/2+x%2+1{
         if x%i==0{
             return false
@@ -12,6 +13,7 @@ fn is_prime(x:i32) ->bool{
 }
 
 fn main() {
+    // add automated test cases make it grade itself of something
     println!("Hello, world!");
     let mut num=100;
 
