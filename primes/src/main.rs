@@ -1,21 +1,94 @@
-
-//use std::io;
-
 fn is_prime(x:i32) ->bool{
-    //try using sieve of erastosthenes of sieve of atkin even better instead here
-    for i in 2..x/2+x%2+1{
-        if x%i==0{
-            return false
+    if x<=1{
+        return false;
+    }
+
+    let numbers:Vec<i32>=(2..=((x as f32).sqrt().round()) as i32).collect();
+    let result:Vec<i32>=numbers
+        .iter()
+        .filter(|&num| x % num == 0)
+        .copied()
+        .collect();
+    return result.len()==0
+}
+
+
+        
+    
+
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn it_works(){
+        assert_eq!(is_prime(5),true);
+        assert_eq!(is_prime(6),false);
+        assert_eq!(is_prime(7),true);
+        assert_eq!(is_prime(8),false);
+    }
+
+    #[test]
+    fn failure(){
+        //just exploring what failed tests look like
+        panic!("this one is supposed to fail")
+    }
+
+    #[test]
+    fn failure2(){
+        assert_eq!(is_prime(5),false);
+    }  
+}
+
+
+
+fn erastosthenes_prime_list(x:i32)->Vec<bool>{
+    //generates a list of primes up to the number x using sieve of erastosthenes method
+    //no for loops allowed!
+    /* 
+    let mut counter:i32=0;
+    */let primes_list: Vec<bool>=vec![];/* 
+    //automatically assume all numbers within our list up to x are prime (true)
+    //primes_list[0:x]=false;
+    //figure out better way to do this
+    loop{
+        if counter>=x{
+            break;
+        }
+        primes_list.push(true);
+        counter+=1;
+    }
+
+
+    //make all non prime composite numbers within our list false
+    counter=2;
+    let xf32:f32=x as f32;
+    loop{
+
+        //
+        if counter>xf32.sqrt().round() as i32{
+            break;
         }
 
+        let mut inner_counter:i32=counter;
+        loop{
+            if inner_counter>=x{
+                break
+            }
+            primes_list[inner_counter]=false;
+            inner_counter+=counter;
+        }
     }
-    return true
+     */
+    return primes_list;
+    
+
 }
 
 fn main() {
-    // add automated test cases make it grade itself of something
     println!("Hello, world!");
-    let mut num=100;
+    let num=100;
 
     for i in 1..num{
         //println!("{i}");
@@ -23,12 +96,4 @@ fn main() {
             println!("{i} is prime!")
         }
     }
-
-
-    //io::stdin()
-        //.read_line(&mut num)
-        //.expect("Failed to read line");
-
-    println!("x");
-
 }
